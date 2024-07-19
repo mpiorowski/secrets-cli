@@ -46,8 +46,8 @@ fn main() -> Result<()> {
             println!("{}", var_str);
         }
         Action::Fish(val) => {
-            let project_path = PathBuf::from(val.project.unwrap_or("".to_string()));
-            let variable_file_path = config.secrets_path.join(project_path).join("var");
+            let project_path = PathBuf::from(val.project.unwrap_or("var".to_string()));
+            let variable_file_path = config.secrets_path.join(project_path);
             check_file(&variable_file_path).context(format!(
                 "Variables file not found. Create it at {:?}",
                 variable_file_path
