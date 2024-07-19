@@ -13,21 +13,9 @@ fn main() -> Result<()> {
     let config = Config::create()?;
     let opts = Opts::parse();
     match opts.action {
-        Action::Show(val) => {
+        Action::Copy(val) => {
             let project_path = PathBuf::from(val.project.unwrap_or("var".to_string()));
             let variable_file_path = config.secrets_path.join(project_path);
-            check_file(&variable_file_path).context(format!(
-                "Variables file not found. Create it at {:?}",
-                variable_file_path
-            ))?;
-
-            let var_str = show_variables(&variable_file_path)?;
-
-            println!("{}", var_str);
-        }
-        Action::Copy(val) => {
-            let project_path = PathBuf::from(val.project.unwrap_or("".to_string()));
-            let variable_file_path = config.secrets_path.join(project_path).join("var");
             check_file(&variable_file_path).context(format!(
                 "Variables file not found. Create it at {:?}",
                 variable_file_path
@@ -45,6 +33,18 @@ fn main() -> Result<()> {
                 .write_all(var_str.as_bytes())
                 .context("Clipboard not written")?;
         }
+        Action::Show(val) => {
+            let project_path = PathBuf::from(val.project.unwrap_or("var".to_string()));
+            let variable_file_path = config.secrets_path.join(project_path);
+            check_file(&variable_file_path).context(format!(
+                "Variables file not found. Create it at {:?}",
+                variable_file_path
+            ))?;
+
+            let var_str = show_variables(&variable_file_path)?;
+
+            println!("{}", var_str);
+        }
         Action::Fish(val) => {
             let project_path = PathBuf::from(val.project.unwrap_or("".to_string()));
             let variable_file_path = config.secrets_path.join(project_path).join("var");
@@ -56,7 +56,6 @@ fn main() -> Result<()> {
             for ele in var_str.split('\n') {
                 println!("set -Ux {}", ele);
             }
-
         }
         Action::Set(val) => {
             println!("Setting secrets path to {:?}", val.path);
@@ -78,9 +77,8 @@ fn main() -> Result<()> {
  */
 fn set_config(path: &PathBuf, clipboard: &str, config_path: &PathBuf) -> Result<()> {
     // secrets path
-    let secrets_json: serde_json::Value =
-        from_str(&to_string(path).context("Json not valid")?)
-            .with_context(|| format!("Json not valid: {:?}", path))?;
+    let secrets_json: serde_json::Value = from_str(&to_string(path).context("Json not valid")?)
+        .with_context(|| format!("Json not valid: {:?}", path))?;
     let clipboard_json: serde_json::Value =
         from_str(&to_string(clipboard).context("Json not valid")?)
             .with_context(|| format!("Json not valid: {:?}", clipboard))?;
