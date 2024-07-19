@@ -57,7 +57,7 @@ fn main() -> Result<()> {
                 let split = ele.split('=').collect::<Vec<&str>>();
                 if split.len() == 2 {
                     println!(
-                        "set -x {} {}",
+                        "set -Ux {} {}",
                         split[0].trim(),
                         split[1].trim()
                     );
