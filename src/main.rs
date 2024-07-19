@@ -13,12 +13,6 @@ fn main() -> Result<()> {
     let config = Config::create()?;
     let opts = Opts::parse();
     match opts.action {
-        Action::Set(val) => {
-            println!("Setting secrets path to {:?}", val.path);
-            println!("Setting clipboard command to {:?}", val.clipboard);
-            check_folder(&val.path)?;
-            set_config(&val.path, &val.clipboard, &config.config_path)?;
-        }
         Action::Show(val) => {
             let project_path = PathBuf::from(val.project.unwrap_or("var".to_string()));
             let variable_file_path = config.secrets_path.join(project_path);
@@ -50,6 +44,25 @@ fn main() -> Result<()> {
                 .unwrap()
                 .write_all(var_str.as_bytes())
                 .context("Clipboard not written")?;
+        }
+        Action::Fish(val) => {
+            let project_path = PathBuf::from(val.project.unwrap_or("".to_string()));
+            let variable_file_path = config.secrets_path.join(project_path).join("var");
+            check_file(&variable_file_path).context(format!(
+                "Variables file not found. Create it at {:?}",
+                variable_file_path
+            ))?;
+            let var_str = show_variables(&variable_file_path)?;
+            for ele in var_str.split('\n') {
+                println!("set -Ux {}", ele);
+            }
+
+        }
+        Action::Set(val) => {
+            println!("Setting secrets path to {:?}", val.path);
+            println!("Setting clipboard command to {:?}", val.clipboard);
+            check_folder(&val.path)?;
+            set_config(&val.path, &val.clipboard, &config.config_path)?;
         }
         Action::Config => {
             println!("{:?}", config);

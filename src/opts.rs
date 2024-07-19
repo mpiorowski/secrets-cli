@@ -12,9 +12,11 @@ pub struct Opts {
 #[derive(Subcommand, Debug, PartialEq)]
 pub enum Action {
     #[command(about = "Copy the secrets")]
-    Copy(Copy),
+    Copy(Project),
     #[command(about = "Show the secrets")]
-    Show(Show),
+    Show(Project),
+    #[command(about = "Transform to fish shell")]
+    Fish(Project),
     #[command(about = "Set a secrets folder")]
     Set(Set),
     #[command(about = "Print the current configuration")]
@@ -22,12 +24,7 @@ pub enum Action {
 }
 
 #[derive(Args, Debug, PartialEq)]
-pub struct Copy {
-    pub project: Option<String>,
-}
-
-#[derive(Args, Debug, PartialEq)]
-pub struct Show {
+pub struct Project {
     pub project: Option<String>,
 }
 
