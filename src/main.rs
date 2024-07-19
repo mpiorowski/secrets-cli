@@ -54,11 +54,14 @@ fn main() -> Result<()> {
             ))?;
             let var_str = show_variables(&variable_file_path)?;
             for ele in var_str.split('\n') {
-                println!(
-                    "set -Ux {} {}",
-                    ele.split("=").collect::<Vec<&str>>()[0],
-                    ele.split("=").collect::<Vec<&str>>()[1]
-                );
+                let split = ele.split('=').collect::<Vec<&str>>();
+                if split.len() == 2 {
+                    println!(
+                        "set -x {} {}",
+                        split[0].trim(),
+                        split[1].trim()
+                    );
+                }
             }
         }
         Action::Set(val) => {
