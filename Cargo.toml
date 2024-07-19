@@ -1,0 +1,22 @@
+[package]
+name = "secrets-cli"
+version = "0.10.0"
+edition = "2021"
+authors = ["Mateusz Piórowski <mateuszpiorowski@gmail.com>"]
+license = "MIT"
+description = "A CLI for managing secrets"
+readme = "README.md"
+homepage = "https://github.com/mpiorowski/secrets-cli"
+repository = "https://github.com/mpiorowski/secrets-cli"
+keywords = ["cli", "utilities", "code-generation", "secrets"]
+categories = ["command-line-utilities"]
+
+[[bin]]
+name = "secrets"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.86"
+clap = { version = "4.5.9", features = ["derive"] }
+serde = { version = "1.0.204", features = ["derive"] }
+serde_json = "1.0.120"
