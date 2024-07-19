@@ -59,7 +59,7 @@ fn main() -> Result<()> {
                     println!(
                         "set -Ux {} {}",
                         split[0].trim(),
-                        split[1].trim()
+                        split[1].trim().replace(" \\", "; \\")
                     );
                 }
             }
