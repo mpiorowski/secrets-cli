@@ -69,10 +69,10 @@ set -Ux SECRET def; \
 
 ### Set
 
-Set up a `templates` folder and a `clipboard` command. Default value is `~/templates` and `xclip` respectively.
+Set up a `secrets` folder and a `clipboard` command. Default value is `~/secrets` and `xclip` respectively.
 
 ```
-sec set [path_to_your_templates_folder] [clipboard_command]
+sec set [path_to_your_secrets_folder] [clipboard_command]
 ```
 
 ### Copy
