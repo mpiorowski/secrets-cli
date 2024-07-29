@@ -1,6 +1,6 @@
 # Secrets CLI
 
-It's a simple tool that let's You easly create, manage and use secrets in Your terminal.
+A simple tool that let's You easly manage, copy and use secrets/envs in Your terminal.
 
 ## Install
 
