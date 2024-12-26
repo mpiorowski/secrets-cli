@@ -12,7 +12,7 @@ Please make sure that `~/.cargo/bin` is in your PATH.
 
 ## Best way to learn is by example!
 
-First create a `~/templates/var` file with the following content:
+First create a `~/secrets/var` file with the following content:
 
 ```
 API_KEY=123456
@@ -25,14 +25,14 @@ Then by running the following command:
 sec copy
 ```
 
-You will copy the content of the `~/templates/var` file into the clipboard:
+You will copy the content of the `~/secrets/var` file into the clipboard:
 
 ```
 API_KEY=123 \
 SECRET=abc \
 ```
 
-Then create next file `~/templates/file_name` with the following:
+Then create next file `~/secrets/file_name` with the following:
 
 ```
 API_KEY=456
@@ -45,7 +45,7 @@ And by running the following command:
 sec show file_name
 ```
 
-This will show the content of the file `~/templates/file_name` in your terminal as:
+This will show the content of the file `~/secrets/file_name` in your terminal as:
 
 ```
 API_KEY=456 \
@@ -58,7 +58,7 @@ Special command for those using `fish` shell:
 sec fish file_name
 ```
 
-This will show the content of the file `~/templates/file_name` in your terminal as:
+This will show the content of the file `~/secrets/file_name` in your terminal as:
 
 ```
 set -Ux API_KEY 456; \
